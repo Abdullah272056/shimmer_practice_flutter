@@ -19,13 +19,14 @@ class _ThirdPageScreenState extends State<ThirdPageScreen> {
   TextEditingController? passwordController = TextEditingController();
   bool _isObscure = true;
 
-  String BASE_URL_API = "http://13.52.81.125:8000/api/";
-  String SUB_URL_API = "v1/user-login/";
+
 
   TextEditingController? otpEditTextController = new TextEditingController();
   String _otpTxt = "";
 
   var dataList;
+  var dataListCopy;
+   late List<String> filterDataList;
 
   @override
   Widget build(BuildContext context) {
@@ -44,20 +45,82 @@ class _ThirdPageScreenState extends State<ThirdPageScreen> {
           backgroundColor: Colors.appRed,
           automaticallyImplyLeading: true,
         ),
-        body: ListView.builder(
-          itemCount: dataList == null ? 0 : dataList.length,
-          itemBuilder: (context, index) {
-            return Text(
-              dataList[index]["userId"],
-              style: const TextStyle(
-                  fontSize: 14, fontWeight: FontWeight.w600),
-              maxLines: 1,
-            );
+        body:Column(
+          children: [
+            InkResponse(
+              child: Text("Filter",
+              style: TextStyle(
+                fontSize: 30,
+
+              ),),
+              onTap: (){
+                for(int i=0;i<dataList.length; i++){
+
+                 //_showToast(filterDataList.length.toString());
+                  if(dataList[i]["userId"].toString()=="1"){
+
+                    dataListCopy[i]=dataList[i];
+                   // filterDataList.add(dataList[i]["id"].toString());
+                   // _showToast(filterDataList.length.toString());
+                  }
+                }
+               _showToast(dataListCopy.length.toString());
+              },
+            ),
+
+            Expanded(child:
+            ListView.builder(
+              itemCount: dataList == null ? 0 : dataList.length,
+              itemBuilder: (context, index) {
+                return Column(
+                  children: [
+
+                    Container(
+                      margin: new EdgeInsets.only(left: 10,right: 1,top: 5,),
+                      color: Colors.blueGrey,
+                      child:Flex(
+                        direction: Axis.horizontal,
+                        children: [
+                         Expanded(child:Container(
+                           margin: EdgeInsets.only(left: 10,right: 10,top: 5,bottom: 5),
+                           child:  Column(
+
+                             children: [
+                               Text(
+                                 dataList[index]["id"].toString(),
+                                 style: const TextStyle(
+                                     fontSize: 22, fontWeight: FontWeight.w600),
+                                 maxLines: 1,
+                               ),
+
+                               Text(
+                                 dataList[index]["title"].toString(),
+                                 style: const TextStyle(
+                                     fontSize: 18, fontWeight: FontWeight.w600),
+                                 maxLines: 2,
+                               ),
+
+                             ],
+
+                           ),
+                         ),
+
+                        )
+                        ],
+                      ) ,
 
 
-            // _buildCartListItem(cartDataList[index]);
-          },
+                    ),
+                  ],
+
+                );
+              },
+            )
+            )
+          ],
         )
+
+
       ),
     );
   }
@@ -68,43 +131,6 @@ class _ThirdPageScreenState extends State<ThirdPageScreen> {
     super.initState();
     _getDataList();
     // passwordController=TextEditingController(text:SharedPref().readUserId());
-  }
-
-
-
-  Widget _buildLoginButton() {
-    return SizedBox(
-      height: 50,
-      width: double.infinity,
-      child: ElevatedButton(
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(
-            Colors.appRed,
-          ),
-          elevation: MaterialStateProperty.all(6),
-          shape: MaterialStateProperty.all(
-            const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(5),
-              ),
-            ),
-          ),
-        ),
-        child: const Text(
-          'LOG IN',
-          style: TextStyle(
-            fontFamily: 'PT-Sans',
-            fontSize: 18,
-            fontWeight: FontWeight.normal,
-            color: Colors.white,
-          ),
-        ),
-        onPressed: () {
-
-         // Navigator.push(context,MaterialPageRoute(builder: (context)=>SignUpScreen()));
-        },
-      ),
-    );
   }
 
   _getDataList() async {
@@ -120,9 +146,11 @@ class _ThirdPageScreenState extends State<ThirdPageScreen> {
          Navigator.of(context).pop();
 
           if (response.statusCode == 200) {
-            _showToast("success");
-            dataList = jsonDecode(response.body);
-            _showToast(dataList.length.toString());
+            setState(() {
+              _showToast("success");
+              dataList = jsonDecode(response.body);
+            });
+
 
           } else {
 

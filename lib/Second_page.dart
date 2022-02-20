@@ -77,6 +77,8 @@ class _LogInScreenState extends State<LogInScreen> {
                   _buildLoginButton(),
                   SizedBox(height: 40,),
                   _buildLoginButton1(),
+                  SizedBox(height: 40,),
+                  _buildLoginButton3(),
 
 
 
@@ -163,6 +165,40 @@ class _LogInScreenState extends State<LogInScreen> {
         onPressed: () {
 
           Navigator.push(context,MaterialPageRoute(builder: (context)=>ApiTestPageScreen()));
+        },
+      ),
+    );
+  }
+  Widget _buildLoginButton3() {
+    return SizedBox(
+      height: 50,
+      width: double.infinity,
+      child: ElevatedButton(
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all(
+            Colors.appRed,
+          ),
+          elevation: MaterialStateProperty.all(6),
+          shape: MaterialStateProperty.all(
+            const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(5),
+              ),
+            ),
+          ),
+        ),
+        child: const Text(
+          'Third',
+          style: TextStyle(
+            fontFamily: 'PT-Sans',
+            fontSize: 18,
+            fontWeight: FontWeight.normal,
+            color: Colors.white,
+          ),
+        ),
+        onPressed: () {
+
+          Navigator.push(context,MaterialPageRoute(builder: (context)=>ThirdPageScreen()));
         },
       ),
     );

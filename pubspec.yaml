@@ -67,6 +67,7 @@ dependencies:
 #  smooth_page_indicator: ^1.0.0+2
 #  #shimmer
   shimmer: ^2.0.0
+  animated_text_kit: ^4.2.1
 #   #count down
 #  otp_count_down: ^1.0.6
 

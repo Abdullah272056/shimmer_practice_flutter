@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -48,9 +49,33 @@ class _FourPageScreenState extends State<FourPageScreen> {
         body: Center(
             child:Column(
               children: [
-
                 SizedBox(
-                  height: 100,
+                  height: 20,
+                ),
+                Shimmer.fromColors(
+                  baseColor: Colors.green,
+                  highlightColor: Colors.red,
+                  child: Container(
+                    color: Colors.white,
+                    height: 50,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Text(
+                          'Shimmer',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 40.0,
+                            fontWeight:
+                            FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
                 ),
                 Shimmer.fromColors(child: SizedBox(
                   child: Row(
@@ -64,13 +89,12 @@ class _FourPageScreenState extends State<FourPageScreen> {
                 ),
                     baseColor: Colors.black, highlightColor:Colors.hint_color ),
                 SizedBox(
-                  width: 200.0,
-                  height: 100.0,
                   child: Shimmer.fromColors(
+
                     baseColor: Colors.red,
                     highlightColor: Colors.black,
                     child: Text(
-                      'Shimmer',
+                      'Abdullah Al Aman',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 40.0,
@@ -80,63 +104,39 @@ class _FourPageScreenState extends State<FourPageScreen> {
                     ),
                   ),
                 ),
-                Shimmer.fromColors(
-                  baseColor: Colors.green,
-                  highlightColor: Colors.red,
-                  child: Container(
-                    color: Colors.white,
-                    height: 50,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Text(
-                          'Shimmer',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 40.0,
-                            fontWeight:
-                            FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
+                DefaultTextStyle(
+                  style: const TextStyle(
+                      fontSize: 40.0,
+                      color: Colors.indigo
                   ),
-                ),
-                SizedBox(
-                  height: 50,
-                ),
-                Shimmer.fromColors(
-                  baseColor: Colors.green,
-                  highlightColor: Colors.red,
-                  child: Container(
-                    color: Colors.white,
-                    height: 50,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Text(
-                          'Shimmer',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 40.0,
-                            fontWeight:
-                            FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 50,
-                ),
-                InkWell(
-                  child: Text("Go To",style: TextStyle(fontSize: 25),),
-                  onTap: (){
-                    //Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+                  child: AnimatedTextKit(
+                    animatedTexts: [
+                      WavyAnimatedText('Abdullah Al Aman'),
 
-                  },
+                    ],
+                    isRepeatingAnimation: true,
+                    onTap: () {
+                      print("Tap Event");
+                    },
+                  ),
                 ),
+                AnimatedTextKit(
+                  animatedTexts: [
+                    TypewriterAnimatedText(
+                      'Hello Abdullah!',
+                      textStyle: const TextStyle(
+                        fontSize: 32.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      speed: const Duration(milliseconds: 100),
+                    ),
+                  ],
+                  totalRepeatCount: 10,
+                  pause: const Duration(milliseconds: 200),
+                  displayFullTextOnTap: true,
+                  stopPauseOnTap: true,
+                ),
+
               ],
             )
 
